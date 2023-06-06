@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 const Courses = (props) => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const [data, setData] = useState({ title: props.subject, description: props.description });
 
