@@ -14,7 +14,7 @@ const Activate = () => {
     show: true,
   });
 
-  const { name, show } = values;
+  const { name } = values;
 
   const { decodedToken } = useJwt(token);
   const decodedName = decodedToken?.name;
