@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 // import jwt from 'jsonwebtoken';
+import { useJwt } from 'react-jwt';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
@@ -12,16 +13,18 @@ export default function Reset({match}) {
         buttonText: 'Reset password'
     });
 
-    useEffect(() => {
-        // let token = match.params.token;
-        // let { name } = jwt.decode(token);
-        // console.log(name);
-        if (token) {
-            setValues({ ...values, name, token });
-        }
-    }, []);
-
     const { name, token, newPassword, buttonText } = values;
+
+    const { decodedToken } = useJwt(token);
+    const decodedName = decodedToken?.name;
+  
+    useEffect(() => {
+      if (token) {
+        setValues({ ...values, name: decodedName, token });
+      }
+    }, [token, decodedName, values])
+
+    
 
     const handleChange = event => {
         setValues({ ...values, newPassword: event.target.value });

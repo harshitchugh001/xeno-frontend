@@ -4,7 +4,7 @@ import Courses from './Courses';
 import AddCourses from './AddCourses';
 
 export default function ContactList() {
-  const [edit, setEdit] = useState(false);
+  
   const [id, setId] = useState(null);
   const [course, setCourse] = useState([]);
   

@@ -1,6 +1,6 @@
 import React,{ useState } from 'react'
 import axios from 'axios';
-import { Link, Navigate  } from 'react-router-dom'
+import {  Navigate  } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import { isAuth } from './helpers';

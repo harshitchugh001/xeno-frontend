@@ -58,24 +58,25 @@ const Courses = (props) => {
     <>
       <ToastContainer />
       <div className="container" style={{ backgroundColor: "#FAECD6" }}>
-        {props.id !== props.Id &&
-          <div className="element">
-            <h5 className="">{props.subject}</h5>
-            <p className="">{props.description}</p>
-            <div className="button">
-              <a href="#" className="btn btn-primary" onClick={() => { props.updateCourse(props.id) }} style={{ backgroundColor: "#4E6C50" }}>Update</a>
-              <a href="#" className="btn btn-primary" onClick={() => { props.updateData(props.id); deleteCourse(props.id) }} style={{ backgroundColor: "#4E6C50" }}>Delete</a>
-            </div>
-          </div>
-        }
-        {props.id === props.Id &&
-          <div className='editContent'>
-            <input type="text" value={data.title} name="title" onChange={(e) => handleChange(e)} />
-            <input type="text" value={data.description} name="description" onChange={(e) => handleChange(e)} />
-            <a className='btn btn-primary' style={{ backgroundColor: "#4E6C50" }} onClick={saveData}>Save</a>
-          </div>
-        }
+  {props.id !== props.Id && (
+    <div className="element">
+      <h5 className="">{props.subject}</h5>
+      <p className="">{props.description}</p>
+      <div className="button">
+        <button className="btn btn-primary" onClick={() => { props.updateCourse(props.id) }} style={{ backgroundColor: "#4E6C50" }}>Update</button>
+        <button className="btn btn-primary" onClick={() => { props.updateData(props.id); deleteCourse(props.id) }} style={{ backgroundColor: "#4E6C50" }}>Delete</button>
       </div>
+    </div>
+  )}
+  {props.id === props.Id && (
+    <div className="editContent">
+      <input type="text" value={data.title} name="title" onChange={(e) => handleChange(e)} />
+      <input type="text" value={data.description} name="description" onChange={(e) => handleChange(e)} />
+      <button className="btn btn-primary" style={{ backgroundColor: "#4E6C50" }} onClick={saveData}>Save</button>
+    </div>
+  )}
+</div>
+
     </>
   );
 };
