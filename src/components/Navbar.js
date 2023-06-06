@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { Fragment } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { isAuth, signout } from './helpers';
@@ -70,4 +71,35 @@ export default function Navbar() {
       </nav>
     </div>
   );
+=======
+import React from 'react'
+import { Link } from 'react-router-dom'
+
+export default function Navbar(props) {
+  return (
+    <div>
+        <nav className="navbar navbar-expand-lg bg-body-tertiary">
+  <div className="container-fluid">
+    <a className="navbar-brand" href="/">Xeno</a>
+    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span className="navbar-toggler-icon"></span>
+    </button>
+    <div className="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+        <li className="nav-item">
+          <a className="nav-link active" aria-current="page" href="/">Home</a>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" to="/contactlist"> contactlist</Link>
+        </li> 
+      </ul>
+      <Link to="/signin" className="btn btn-outline-success my-2 mx-4 my-sm-0">Sign in</Link>
+      <Link to="/signup" className="btn btn-outline-success my-2 mx-4 my-sm-0">Sign up</Link>
+      
+    </div>
+  </div>
+</nav>
+      </div>
+  )
+>>>>>>> 2a830485b2f41c61dd1948e456913e431b985da4
 }

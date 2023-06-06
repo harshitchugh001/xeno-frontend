@@ -1,3 +1,4 @@
+
 import {
   BrowserRouter as Router,
   Routes,
@@ -30,7 +31,6 @@ function App() {
         </div>
       </Router>
     </>
-  );
+  )
 }
-
 export default App;
