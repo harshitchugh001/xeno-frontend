@@ -20,11 +20,12 @@ function App() {
           <Navbar></Navbar>
           <Routes>
             <Route key="signin" path="/signin" exact element={<Signin></Signin>} />
+            <Route path="/contactlist" exact element={<Contact></Contact>} />
             <Route key="signup" path="/signup" exact element={<Signup></Signup>} />
             <Route path="/auth/activates/:token" exact element={<Activate />} />
             <Route path="/auth/password/forgot" exact component={Forget} />
             <Route path="/auth/password/reset/:token" exact component={Reset} />
-            <Route path="/contactlist" exact element={<Contact></Contact>} />
+           
           </Routes>
         </div>
       </Router>
