@@ -88,7 +88,7 @@ const Login = ({ closeModal }) => {
           <span className="text-sm text-gray-500">
             Don't have an account?{' '}
             <a
-              href="#"
+              href="#login"
               className="text-blue-500 hover:text-blue-600"
               onClick={closeModal}
             >
