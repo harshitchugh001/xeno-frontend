@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import { authenticate, isAuth } from './helper';
+import { useNavigate } from 'react-router-dom';
 
 const Login = ({ closeModal }) => {
+  const navigate = useNavigate();
   const [user, setUser] = useState({
     userEmail: '',
     userPassword: '',
   });
+
+  const [loading, setLoading] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -16,16 +23,39 @@ const Login = ({ closeModal }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Process login logic here
-    // ...
-    closeModal();
+    setLoading(true);
+
+    axios({
+      method: 'POST',
+      url: `${process.env.REACT_APP_API}/signin`,
+      data: { email: user.userEmail, password: user.userPassword },
+    })
+      .then((response) => {
+        console.log('SIGNIN SUCCESS', response);
+        authenticate(response, () => {
+          setUser({
+            userEmail: '',
+            userPassword: '',
+          });
+          toast.success(`Hey ${response.data.user.name}, Welcome back!`);
+          isAuth()
+            ? navigate('/contactlist')
+            : navigate('/');
+        });
+      })
+      .catch((error) => {
+        console.log('SIGNIN ERROR', error.response.data);
+        toast.error(error.response.data.error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   return (
     <>
-    <h2 className="text-2xl font-bold mb-4">Login Form</h2>
+      <h2 className="text-2xl font-bold mb-4">Login Form</h2>
       <div className="mt-2">
-
         <form>
           <div className="my-3">
             <label
@@ -34,7 +64,6 @@ const Login = ({ closeModal }) => {
             >
               Email
             </label>
-
             <div className="mt-1">
               <input
                 type="text"
@@ -53,7 +82,6 @@ const Login = ({ closeModal }) => {
             >
               Password
             </label>
-
             <div className="mt-1">
               <input
                 type="password"
@@ -67,23 +95,22 @@ const Login = ({ closeModal }) => {
           </div>
         </form>
       </div>
-
       <div className="mt-4">
-      <button
-              type="button"
-              className="bg-blue-500 text-white font-bold py-2 px-4 rounded mt-4"
-              onClick={handleSubmit}
-            >
-              Submit
-            </button>
-            <button
-              type="button"
-              className="bg-gray-500 text-white font-bold py-2 px-4 rounded mt-4 ml-2"
-              onClick={closeModal}
-            >
-              Close
-            </button>
-
+        <button
+          type="button"
+          className="bg-blue-500 text-white font-bold py-2 px-4 rounded mt-4"
+          onClick={handleSubmit}
+          disabled={loading}
+        >
+          {loading ? 'Submitting...' : 'Submit'}
+        </button>
+        <button
+          type="button"
+          className="bg-gray-500 text-white font-bold py-2 px-4 rounded mt-4 ml-2"
+          onClick={closeModal}
+        >
+          Close
+        </button>
         <div className="clear-both">
           <span className="text-sm text-gray-500">
             Don't have an account?{' '}

@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 import phonebookImage from '../photos/phonebook.png';
 import Register from './register';
+import { isAuth } from './helper';
+import { useNavigate } from 'react-router-dom';
 
 export default function Home() {
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
+  const navigate = useNavigate();
 
   const openRegisterModal = () => {
     setIsRegisterOpen(true);
@@ -13,8 +18,19 @@ export default function Home() {
     setIsRegisterOpen(false);
   };
 
+  const isAuthenticated = isAuth();
+
+  const handleContacts = () => {
+    if (isAuthenticated) {
+      navigate('/contactlist'); 
+    } else {
+      openRegisterModal(); 
+    }
+  };
+
   return (
     <div>
+      <ToastContainer />
       <nav className="bg-white border-gray-200">
         <div className="max-w-screen-xl flex items-center justify-between mx-auto p-4">
           <a href="#contacts" className="flex items-center">
@@ -28,12 +44,23 @@ export default function Home() {
             </span>
           </a>
           <div className="flex items-center">
-            <button
-              className="bg-slate-500 hover:bg-slate-600 text-white font-bold py-2 px-4 rounded mt-4"
-              onClick={openRegisterModal}
-            >
-              Join Now
-            </button>
+           
+            {isAuthenticated && (
+              <button
+                className="bg-slate-500 hover:bg-slate-600 text-white font-bold py-2 px-4 rounded mt-4"
+                onClick={handleContacts}
+              >
+                Contacts
+              </button>
+            )}
+            {!isAuthenticated && (
+              <button
+                className="bg-slate-500 hover:bg-slate-600 text-white font-bold py-2 px-4 rounded mt-4"
+                onClick={openRegisterModal}
+              >
+                Join Now
+              </button>
+            )}
           </div>
         </div>
       </nav>
@@ -48,12 +75,22 @@ export default function Home() {
               <p className="text-xl mb-4 text-gray-400">
                 All your contacts in one place
               </p>
-              <button
-                className="bg-slate-500 hover:bg-slate-600 text-white font-bold py-2 px-4 rounded mt-4"
-                onClick={openRegisterModal}
-              >
-                Click Join Now to Get started
-              </button>
+              {isAuthenticated && (
+                <button
+                  className="bg-slate-500 hover:bg-slate-600 text-white font-bold py-2 px-4 rounded mt-4"
+                  onClick={handleContacts}
+                >
+                  Contacts
+                </button>
+              )}
+              {!isAuthenticated && (
+                <button
+                  className="bg-slate-500 hover:bg-slate-600 text-white font-bold py-2 px-4 rounded mt-4"
+                  onClick={openRegisterModal}
+                >
+                  Click Join Now to Get started
+                </button>
+              )}
             </div>
             <div className="w-full md:w-1/2 flex items-center justify-center">
               <img
@@ -69,8 +106,7 @@ export default function Home() {
           </div>
         </section>
       </div>
-
-      {isRegisterOpen && (
+      {isRegisterOpen && !isAuthenticated && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
           <div className="bg-white rounded-md p-8 w-1/2">
             <Register closeModal={closeRegisterModal} />

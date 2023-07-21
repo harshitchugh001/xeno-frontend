@@ -1,15 +1,30 @@
 
 import './App.css';
 import Home from './components/home';
-// import Register from './components/register'
+import Activate from './components/Activate';
+import Contact from './components/contact';
+
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+} from 'react-router-dom';
 
 function App() {
   return (
-    <div className="App">
-     <Home></Home>
-     {/* <Register></Register> */}
-    
-    </div>
+    <>
+      <Router>
+        <div className="App">
+
+          <Routes>
+            <Route key="Home" path='/' exact element={<Home></Home>} />
+            <Route path="/auth/activates/:token" exact element={<Activate />} />
+            <Route path='/contactlist' exact element={<Contact></Contact>}></Route>
+            <Route></Route>
+          </Routes>
+        </div>
+      </Router>
+    </>
   );
 }
 

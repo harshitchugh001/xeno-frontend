@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
 import Login from './login';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 const Register = ({ closeModal }) => {
   const [user, setUser] = useState({
     userName: '',
     userEmail: '',
     userPassword: '',
+    buttonText: 'Submit'
   });
+  const { userName, userEmail, userPassword, buttonText } = user;
   const [isLoginOpen, setIsLoginOpen] = useState(false);
 
   const handleInputChange = (e) => {
@@ -19,8 +24,22 @@ const Register = ({ closeModal }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Process registration logic here
-    // ...
+    setUser({ ...user, buttonText: 'Submitting' });
+    axios({
+      method: 'POST',
+      url: `${process.env.REACT_APP_API}/signup`,
+      data: { userName, userEmail, userPassword }
+    })
+      .then(response => {
+        console.log('SIGNUP SUCCESS', response);
+        setUser({ ...user, userNamename: '', userEmailemail: '', userEmailpassword: '', buttonText: 'Submitted' });
+        toast.success(response.data.message);
+      })
+      .catch(error => {
+        console.log('SIGNUP ERROR', error.response.data);
+        setUser({ ...user, buttonText: 'Submit' });
+        toast.error(error.response.data.error);
+      });
     closeModal();
   };
 
@@ -37,6 +56,7 @@ const Register = ({ closeModal }) => {
       {!isLoginOpen ? (
         <>
           <h2 className="text-2xl font-bold mb-4">Register Form</h2>
+          
           <form>
             <div className="my-3">
               <label
@@ -91,8 +111,9 @@ const Register = ({ closeModal }) => {
               type="button"
               className="bg-blue-500 text-white font-bold py-2 px-4 rounded mt-4"
               onClick={handleSubmit}
+
             >
-              Submit
+              {buttonText}
             </button>
             <button
               type="button"
